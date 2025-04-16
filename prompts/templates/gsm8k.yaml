@@ -1,0 +1,26 @@
+zero-shot: |
+  Solve the following Maths problem:
+  
+  ### Question: {{ question }}
+  
+  ### Answer:
+
+
+few-shot: |
+  I'm going to solve some arithmetic problems step-by-step.
+  
+  {% for example in examples %}
+  ### Problem: {{ example.question }}
+  ### Solution: {{ example.answer }}
+  {% endfor %}
+  
+  Problem: {{ question }}
+  Solution:
+
+
+chain-of-thought: |
+  Solve the following arithmetic problem step-by-step, explaining your reasoning at each step:
+  
+  ### Question: {{ question }}
+  
+  ### Answer with Reasoning: 

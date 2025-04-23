@@ -1,24 +1,24 @@
-from typing import Optional, List, Dict
+from typing import Optional, List, Dict, Tuple
 from abc import ABC, abstractmethod
 import jinja2
 import time
 
 class BasePromptTemplate(ABC):
 
-    def __init__(self, template_str: Optional[str] = None, template_path: Optional[str] = None) -> None:
+    def __init__(self, template_dict: Dict) -> None:
         super().__init__()
-        if template_str:
-            self.template_str = template_str
-        elif template_path:
-            with open(template_path, "r") as _f:
-                self.template_str = _f.read()
-        else:
-            raise ValueError("Either template_str or template_path must be provided.")
+        self.template_dict = template_dict
+        self.system_prompt = jinja2.Template(self.template_dict['system_prompt'])
+        self.prompt = jinja2.Template(self.template_dict['prompt'])
 
-        self.template = jinja2.Template(self.template_str)
+    def format(self, question: str, data = None, **kwargs) -> Tuple[str, str]:
+        return self.system_prompt.render(**kwargs), self.prompt.render(prompt=question, **kwargs)
 
-    def format(self, question: str, data = None, **kwargs):
-        return self.template.render(question=question, **kwargs)
+    def get_system_prompt_template(self) -> str:
+        return self.system_prompt if self.system_prompt else None
+    
+    def get_prompt_template(self) -> str:
+        return self.prompt
 
 
 class ZeroShotTemplate(BasePromptTemplate):

@@ -5,9 +5,10 @@ import yaml
 from .prompt_template import BasePromptTemplate, ZeroShotTemplate, FewShotTemplate, ChainOfThoughtTemplate
 
 PROMPT_TEMPLATES = {
-    "zero-shot": ZeroShotTemplate,
-    "few-shot": FewShotTemplate,
-    "chain-of-thought": ChainOfThoughtTemplate,
+    "zero-shot-direct-answer": ZeroShotTemplate,
+    "zero-shot-cot": ZeroShotTemplate,
+    "role-prompting": ZeroShotTemplate,
+    "rereading-prompting": ZeroShotTemplate
 }
 
 

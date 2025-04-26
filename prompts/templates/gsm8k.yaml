@@ -33,12 +33,157 @@ role-prompting:
 
     Please walk the student through your step-by-step reasoning. At the end, provide the final answer boxed as $\\boxed{your answer}$.
 
-rereading-prompting:
+few-shot-direct-answer:
   system_prompt: |
-    You are a precise math solver. You re-read the question before solving, and explain step-by-step with boxed final answers like this $"\\boxed{your answer}"$.
+    You are a helpful AI assistant that will answer math questions directly. You will only say "\\boxed{your answer}". You must end your response with $\\boxed{your answer}$ every time!
   prompt: |
-    Question: {prompt}
+    {% for example in examples %}
+    ### Problem: {{ example.question | trim }}
+    
+    ### Solution: {{ example.answer | trim }}
+  
 
-    \n\nRead the question again: {prompt}
+    {% endfor %}
+    \n\n
 
-    \n\nTake a deep breath. Think carefully and solve the problem step-by-step . At the end, provide the final answer boxed as $\\boxed{your answer}$.
+    ### Problem: {{ prompt }}
+    ### Solution: 
+
+    
+    Remember to box your final answer via $\\boxed{your answer}$
+
+few-shot-cot:
+  system_prompt: |
+    You are a helpful AI assistant that will answer reasoning questions. You will reason step by step and you will always say at the end $\\boxed{your answer}$". You must end your response with "\\boxed{your answer}" everytime!
+  prompt: |
+    {% for example in examples %}
+    ### Problem: {{ example.question | trim }}
+    
+    ### Solution: {{ example.answer | trim }}
+    
+    
+    {% endfor %}
+
+    \n\n
+    Solve the following math problem. Explain your reasoning step by step. When you are finished, box your final answer: $\\boxed{your answer}$.
+
+    ### Problem: {{ prompt }}
+    ### Solution: 
+
+    
+    Remember to box your final answer via $\\boxed{your answer}$
+
+chain-of-draft:
+  system_prompt: |
+    You are a math reasoning assistant. Solve problems using short drafts with a maximum of 5 words per step. At the end, return your final answer using the format $\\boxed{your\\ answer}$.
+  prompt: |
+    Solve the following math problem using minimal drafts.
+
+    Instructions:
+    - Each step must be 8 words or fewer.
+    - Keep only essential transformations.
+    - Final answer must be boxed using $\\boxed{...}$.
+
+    Problem:
+    {{ prompt }}
+
+    Let’s begin:
+
+tabular-cot:
+  system_prompt: |
+    You are a math assistant that solves problems using structured tabular reasoning. For each step, clearly state the sub-question, the procedure used, and the result. End with the final answer boxed using $\\boxed{...}$.
+  prompt: |
+    Solve the following math problem using a reasoning table format.
+
+    Problem:
+    {{ prompt }}
+
+    Use the following format:
+    | step | subquestion | procedure | result |
+    |------|-------------|-----------|--------|
+
+    [Fill out the table based on the problem]
+
+    After completing the table, provide the final answer boxed using $\\boxed{your answer}$
+
+analogical-prompting:
+  system_prompt: |
+    You are a math tutor who uses analogical reasoning. For any new problem, you recall and solve related example problems first, then solve the actual problem using insights from those analogies. Conclude with a boxed final answer: $\\boxed{...}$
+  prompt: |
+    Your task is to tackle mathematical problems by using analogical reasoning. When presented with a math problem, recall **relevant example problems** that are similar in structure or logic. Solve them first. Then, use what you’ve learned to solve the original problem.
+
+    Problem:
+    {{ prompt }}
+
+    Instruction: Recall at least two relevant math problems that are structurally or procedurally similar but use different numbers, names, or contexts. For each:
+
+    Q: [Describe the analogical example]  
+    A: [Explain the solution step-by-step and provide a boxed answer]
+
+    Afterward, solve the initial problem:
+    Q: {prompt}  
+    A: [Your reasoning here]
+
+    Final Answer: $\\boxed{your answer}$
+
+cumulative-reasoning:
+  system_prompt: |
+    You are a brilliant AI mathematician. For each math problem, think step by step. First, identify relevant premises or facts. Then, deduce a valid proposition using logic. The proposition must help verify the final answer and be logically derived from the premises without using outside knowledge. End with your boxed final answer using $\\boxed{...}.
+  prompt: |
+    Problem:
+    {{ prompt }}
+
+    Step 1 – Identify premises: [List relevant facts from the question].
+
+    Step 2 – Deduce a new proposition using logic that helps verify the answer.
+
+    Step 3 – Use the proposition to solve the problem.
+
+    Final Answer: $\\boxed{your answer}$
+
+least-to-most:
+  system_prompt: |
+    You are a step-by-step reasoning assistant. For each question, first break it down into simpler sub-questions. Then solve each sub-question incrementally and build upon prior results. Always conclude with a boxed final answer using $\\boxed{...}$.
+  prompt: |
+    Q: {{ prompt }}
+
+    A: Let’s break down this problem:
+
+    1. [Write the first sub-question here]
+    2. [Write the second sub-question based on the first answer]
+    ...
+
+    Now answer each step:
+
+    1. [Answer to sub-question 1]
+    2. [Answer to sub-question 2 using result from step 1]
+
+    Final Answer: $\\boxed{your answer}$
+
+plan-and-solve:
+  system_prompt: |
+    You are a thoughtful math assistant. First, understand the problem and make a clear plan. Then execute the plan step-by-step, calculate accurately, and conclude with the final answer boxed using $\\boxed{...}$.
+  prompt: |
+    Problem:
+    {{ prompt }}
+
+    Step 1: Reasoning Generation  
+    Let’s first understand the problem, extract relevant variables and their corresponding values, and make a plan.  
+    Then, let’s carry out the plan, calculate intermediate results, and solve the problem step by step.
+
+    Step 2: Answer Extraction  
+    Therefore, the answer is: $\\boxed{your answer}$
+
+tree-of-thought:
+  system_prompt: |
+    You are a team of three expert mathematicians collaborating to solve problems. Each expert writes one reasoning step, then shares it with the group. If any expert finds their path incorrect, they leave. Continue step-by-step until the final correct answer is reached. Conclude with a boxed final answer using $\\boxed{...}$.
+  prompt: |
+    Problem:
+    {{ prompt }}
+
+    Imagine three different experts are solving this problem.
+
+    Each expert will write down one step of their thinking, share it with the others, and decide whether to continue or backtrack if a mistake is noticed.  
+    Continue this process until a correct solution is reached.
+
+    At the end, provide the final answer as $\\boxed{your answer}$.

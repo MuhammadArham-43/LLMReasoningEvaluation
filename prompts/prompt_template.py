@@ -11,7 +11,7 @@ class BasePromptTemplate(ABC):
         self.system_prompt = jinja2.Template(self.template_dict['system_prompt'])
         self.prompt = jinja2.Template(self.template_dict['prompt'])
 
-    def format(self, question: str, data = None, **kwargs) -> Tuple[str, str]:
+    def format(self, question: str, **kwargs) -> Tuple[str, str]:
         return self.system_prompt.render(**kwargs), self.prompt.render(prompt=question, **kwargs)
 
     def get_system_prompt_template(self) -> str:
@@ -32,8 +32,14 @@ class FewShotTemplate(BasePromptTemplate):
         return data.select(range(num_examples))
 
     def format(self, question: str, data, **kwargs):
-        examples = self._generate_fewshot_examples(data)
-        return self.template.render(examples=examples, question=question, **kwargs)
+        examples = self._generate_fewshot_examples(data, num_examples=8)
+        return self.system_prompt.render(**kwargs), self.prompt.render(examples=examples, prompt=question.strip(), **kwargs)
 
 class ChainOfThoughtTemplate(BasePromptTemplate):
+    pass
+
+class SelfCriticism(BasePromptTemplate):
+    pass
+
+class DecompositionPrompting(BasePromptTemplate):
     pass

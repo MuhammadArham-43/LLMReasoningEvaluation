@@ -2,13 +2,21 @@ from pathlib import Path
 import os 
 import yaml
 
-from .prompt_template import BasePromptTemplate, ZeroShotTemplate, FewShotTemplate, ChainOfThoughtTemplate
+from .prompt_template import BasePromptTemplate, ZeroShotTemplate, FewShotTemplate, ChainOfThoughtTemplate, SelfCriticism, DecompositionPrompting
 
 PROMPT_TEMPLATES = {
     "zero-shot-direct-answer": ZeroShotTemplate,
     "zero-shot-cot": ZeroShotTemplate,
     "role-prompting": ZeroShotTemplate,
-    "rereading-prompting": ZeroShotTemplate
+    "few-shot-direct-answer": FewShotTemplate,
+    "few-shot-cot": FewShotTemplate,
+    "chain-of-draft": ChainOfThoughtTemplate,
+    "tabular-cot": ChainOfThoughtTemplate,
+    "analogical-prompting": ChainOfThoughtTemplate,
+    "cumulative-reasoning": SelfCriticism,
+    "least-to-most": DecompositionPrompting,
+    "plan-and-solve": DecompositionPrompting,
+    "tree-of-thought": DecompositionPrompting
 }
 
 

@@ -37,7 +37,7 @@ if __name__ == "__main__":
             if iteration < start_idx:
                 iteration += 1
                 continue
-            system_prompt, prompt = prompt_template.format(example['question'].strip(), data.get_data())
+            system_prompt, prompt = prompt_template.format(question=example['question'].strip(), data=data.get_train_data())
             start_time = time.time()
             response, usage = model(system_prompt=system_prompt, prompt=prompt)
             end_time = time.time()

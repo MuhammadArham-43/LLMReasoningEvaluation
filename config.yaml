@@ -1,0 +1,23 @@
+model:
+  name: command-r-08-2024
+  class: models.CohereLLM
+  api_key_env_var: COHERE_API_KEY
+
+dataset:
+  name: gsm8k
+  class: dataloader.GSM8K
+
+prompts:
+  use:
+    - zero-shot-direct-answer
+    - zero-shot-cot
+    - role-prompting
+    - few-shot-direct-answer
+    - few-shot-cot
+    - chain-of-draft
+    - tabular-cot
+    - analogical-prompting
+    - cumulative-reasoning
+    - least-to-most
+    - plan-and-solve
+    - tree-of-thought

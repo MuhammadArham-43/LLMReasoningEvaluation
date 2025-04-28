@@ -15,7 +15,7 @@ if __name__ == "__main__":
     assert API_KEY and API_KEY != "", "MODEL API KEY IS REQUIRED"
     
     RESULT_DIR = "results"
-    MODEL_NAME = "command-a-03-2025"
+    MODEL_NAME = "command-r-08-2024"
     model = CohereLLM(MODEL_NAME, api_key=API_KEY)
     data = GSM8K()
     prompt_templates = get_prompt_templates_for_dataset(

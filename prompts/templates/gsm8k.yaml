@@ -8,7 +8,8 @@ zero-shot-direct-answer:
     {{ prompt }}
     
     
-    \n\nRemember to box your final answer via $\\boxed{your answer}$.
+    \n\nRemember to box your final answer via $\\boxed{*your_answer*}$ where *your_answer* is numeric with no symbols or words.
+    
 
 zero-shot-cot:
   system_prompt: |
@@ -20,7 +21,7 @@ zero-shot-cot:
     {{ prompt }}
     
     
-    \n\nRemember to box your final answer via $\\boxed{your answer}$.
+    \n\nRemember to box your final answer via $\\boxed{*your_answer*}$ where *your_answer* is numeric with no symbols or words.
 
 role-prompting:
   system_prompt: |
@@ -31,7 +32,7 @@ role-prompting:
     Problem:
     {{ prompt }}
 
-    Please walk the student through your step-by-step reasoning. At the end, provide the final answer boxed as $\\boxed{your answer}$.
+    Please walk the student through your step-by-step reasoning. At the end, provide the final answer boxed as $\\boxed{*your_answer*}$ where *your_answer* is numeric with no symbols or words.
 
 few-shot-direct-answer:
   system_prompt: |
@@ -46,11 +47,15 @@ few-shot-direct-answer:
     {% endfor %}
     \n\n
 
+    Based on the previous examples, solve the following math problem. Remember to box your final answer via $\\boxed{*your_answer*}$ where *your_answer* is numeric with no symbols or words.
+
+
     ### Problem: {{ prompt }}
+
     ### Solution: 
 
     
-    Remember to box your final answer via $\\boxed{your answer}$
+    
 
 few-shot-cot:
   system_prompt: |
@@ -65,13 +70,13 @@ few-shot-cot:
     {% endfor %}
 
     \n\n
-    Solve the following math problem. Explain your reasoning step by step. When you are finished, box your final answer: $\\boxed{your answer}$.
+    Based on the previous examples, solve the following math problem. Explain your reasoning step by step. When you are finished, remeber to box your final answer via $\\boxed{*your_answer*}$ where *your_answer* is numeric with no symbols or words.
+
 
     ### Problem: {{ prompt }}
+
     ### Solution: 
 
-    
-    Remember to box your final answer via $\\boxed{your answer}$
 
 chain-of-draft:
   system_prompt: |
@@ -82,7 +87,7 @@ chain-of-draft:
     Instructions:
     - Each step must be 8 words or fewer.
     - Keep only essential transformations.
-    - Final answer must be boxed using $\\boxed{...}$.
+    - Final answer must be boxed using $\\boxed{*your_answer*}$ where *your_answer* is numeric with no symbols or words.
 
     Problem:
     {{ prompt }}
@@ -104,7 +109,7 @@ tabular-cot:
 
     [Fill out the table based on the problem]
 
-    After completing the table, provide the final answer boxed using $\\boxed{your answer}$
+    After completing the table, provide the final answer boxed using $\\boxed{*your_answer*}$ where *your_answer* is numeric with no symbols or words.
 
 analogical-prompting:
   system_prompt: |
@@ -124,7 +129,7 @@ analogical-prompting:
     Q: {prompt}  
     A: [Your reasoning here]
 
-    Final Answer: $\\boxed{your answer}$
+    Final Answer: $\\boxed{*your_answer*}$ where *your_answer* is numeric with no symbols or words.
 
 cumulative-reasoning:
   system_prompt: |
@@ -139,7 +144,7 @@ cumulative-reasoning:
 
     Step 3 – Use the proposition to solve the problem.
 
-    Final Answer: $\\boxed{your answer}$
+    Final Answer: $\\boxed{*your_answer*}$ where *your_answer* is numeric with no symbols or words.
 
 least-to-most:
   system_prompt: |
@@ -158,7 +163,7 @@ least-to-most:
     1. [Answer to sub-question 1]
     2. [Answer to sub-question 2 using result from step 1]
 
-    Final Answer: $\\boxed{your answer}$
+    Final Answer: $\\boxed{*your_answer*}$ where *your_answer* is numeric with no symbols or words.
 
 plan-and-solve:
   system_prompt: |
@@ -172,7 +177,7 @@ plan-and-solve:
     Then, let’s carry out the plan, calculate intermediate results, and solve the problem step by step.
 
     Step 2: Answer Extraction  
-    Therefore, the answer is: $\\boxed{your answer}$
+    Therefore, the answer is: $\\boxed{*your_answer*}$ where *your_answer* is numeric with no symbols or words.
 
 tree-of-thought:
   system_prompt: |
@@ -186,4 +191,4 @@ tree-of-thought:
     Each expert will write down one step of their thinking, share it with the others, and decide whether to continue or backtrack if a mistake is noticed.  
     Continue this process until a correct solution is reached.
 
-    At the end, provide the final answer as $\\boxed{your answer}$.
+    At the end, provide the final answer as $\\boxed{*your_answer*}$ where *your_answer* is numeric with no symbols or words.

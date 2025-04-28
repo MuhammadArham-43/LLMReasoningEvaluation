@@ -60,7 +60,7 @@ def evaluate_exact_match(gt_answer, model_response):
 
 
 if __name__ == "__main__":
-    RESPONSE_FILE_PATH = "results/GSM8K/command-r-08-2024/analogical-prompting.json"
+    RESPONSE_FILE_PATH = "results/GSM8K/command-r-08-2024/zero-shot-direct-answer.json"
     with open(RESPONSE_FILE_PATH, "r") as _f:
         responses = json.load(_f)
 

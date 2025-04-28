@@ -2,7 +2,7 @@ zero-shot-direct-answer:
   system_prompt: |
     You are a helpful AI assistant that will answer reasoning questions. You will only say "\\boxed{your answer}". You must end your response with $\\boxed{your answer}$ everytime!
   prompt: |
-    Solve the following math problem. Explain your reasoning step by step. When you are finished, box your final answer: $\\boxed{your answer}$.
+    Solve the following math problem.
             
     Problem:
     {{ prompt }}
@@ -70,7 +70,7 @@ few-shot-cot:
     {% endfor %}
 
     \n\n
-    Based on the previous examples, solve the following math problem. Explain your reasoning step by step. When you are finished, remeber to box your final answer via $\\boxed{*your_answer*}$ where *your_answer* is numeric with no symbols or words.
+    Based on the previous examples, solve the following math problem. Explain your reasoning step by step. When you are finished, remember to box your final answer via $\\boxed{*your_answer*}$ where *your_answer* is numeric with no symbols or words.
 
 
     ### Problem: {{ prompt }}

@@ -3,3 +3,5 @@ pyyaml
 cohere
 datasets
 tqdm
+pylatexenc
+sympy
